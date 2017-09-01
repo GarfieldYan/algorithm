@@ -40,17 +40,15 @@ public class Array {
 	 * @return 总逆序对数量
 	 */
 	public static int calcInversion(int[] A) {
-		// 存放对数组A进行归并排序后的结果
-		int tempA[] = new int[A.length];
-		return calcInversion(A, tempA, 0, A.length - 1);
+		return calcInversion(A, 0, A.length - 1);
 	}
 
-	public static int calcInversion(int[] A, int[] tempA, int p, int r) {
+	public static int calcInversion(int[] A, int p, int r) {
 		if (p < r) {
 			int q = (p + r) / 2;
-			return calcInversion(A, tempA, p, q) 
-					+ calcInversion(A, tempA, q + 1, r)
-					+ mergeAndCalcInversion(A, tempA, p, q + 1, r);
+			return calcInversion(A, p, q) 
+					+ calcInversion(A, q + 1, r)
+					+ mergeAndCalcInversion(A, p, q + 1, r);
 		} else {
 			return 0;
 		}
@@ -62,42 +60,43 @@ public class Array {
 	 * @param A 待合并数组
 	 * @param pqr p<=q<r，且 A[p..q]和A[q+1..r]已排序
 	 */
-	private static int mergeAndCalcInversion(int[] A, int[] tempA, int p, int q, int r) {
+	private static int mergeAndCalcInversion(int[] A, int p, int q, int r) {
+		int count = 0;
+		int[] rangedA = new int[r - p + 1];
 		int currentLeft = p;
 		int currentRight = q + 1;
-		int count = 0;
-		for (int i = p; i < r - p + 1; i++) {
+		for (int i = 0; i < rangedA.length; i++) {
 			// 两个子序列都已用完
 			if (currentLeft > q && currentRight > r) {
 				break;
 			}
 			// 左边子序列已用完，右边没用完
 			if (currentLeft > q) {
-				tempA[i] = A[currentRight];
+				rangedA[i] = A[currentRight];
 				currentRight++;
 				continue;
 			}
 			// 右边子序列已用完，左边没用完
 			if (currentRight > r) {
-				tempA[i] = A[currentLeft];
+				rangedA[i] = A[currentLeft];
 				currentLeft++;
 				continue;
 			}
 			// 两边都还没用完
 			if (A[currentLeft] > A[currentRight]) {
-				tempA[i] = A[currentRight];
+				rangedA[i] = A[currentRight];
 				currentRight++;
-				count = count + (q - currentLeft + 1);
+				count = count + (q - p + 1);
 				continue;
 			} else {
-				tempA[i] = A[currentLeft];
+				rangedA[i] = A[currentLeft];
 				currentLeft++;
 				continue;
 			}
 		}
 		// 将排好序的数组复制回原数组
-		for (int i = p; i < r - p + 1; i++) {
-			A[p + i] = tempA[i];
+		for (int i = 0; i < rangedA.length; i++) {
+			A[p + i] = rangedA[i];
 		}
 		return count;
 	}
