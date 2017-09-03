@@ -46,16 +46,16 @@ public class Array {
 	public static int calcInversion(int[] A, int p, int r) {
 		if (p < r) {
 			int q = (p + r) / 2;
-			return calcInversion(A, p, q) 
-					+ calcInversion(A, q + 1, r)
-					+ mergeAndCalcInversion(A, p, q + 1, r);
+			return calcInversion(A, p, q) 					//两个数都在左子序列中的逆序对
+					+ calcInversion(A, q + 1, r)			//两个数都在右子序列中的逆序对
+					+ mergeAndCalcInversion(A, p, q, r);	//大数在左子序列，小数在右子序列中的逆序对
 		} else {
 			return 0;
 		}
 	}
 
 	/**
-	 * 合并两个已排序的序列，返回合并过程中发现的逆序对数量(不计两个数只在左数组或只在右数组的逆序对)
+	 * 合并两个已排序的序列，返回合并过程中发现的逆序对数量(大数在左子序列，小数在右子序列中的逆序对)
 	 * 
 	 * @param A 待合并数组
 	 * @param pqr p<=q<r，且 A[p..q]和A[q+1..r]已排序
@@ -86,7 +86,7 @@ public class Array {
 			if (A[currentLeft] > A[currentRight]) {
 				rangedA[i] = A[currentRight];
 				currentRight++;
-				count = count + (q - p + 1);
+				count = count + (q - currentLeft + 1);
 				continue;
 			} else {
 				rangedA[i] = A[currentLeft];
