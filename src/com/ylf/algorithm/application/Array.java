@@ -5,12 +5,13 @@ import com.ylf.algorithm.sort.Sort;
 public class Array {
 
 	/**
-	 * 寻找和为定值的两个数, 时间复杂度O(NlogN)
+	 * 寻找和为定值的两个数
 	 * 
+	 * 时间复杂度: Θ(NlgN)
 	 * @return 是否存在和为定值的两个数
 	 */
 	public static boolean findTwoNumForFixedSum(int[] A, int fixedSum) {
-		// 先执行归并排序，时间复杂度O(NlogN)
+		// 先执行归并排序，时间复杂度Θ(NlogN)
 		Sort.mergeSort(A);
 		// 以下代码时间复杂度O(N), 用两个指针i，j，各自指向数组的首尾两端，令i=0，j=n-1，然后i++，j--，逐次判断a[i]+a[j]?=sum 
 		boolean result = false;
@@ -37,6 +38,7 @@ public class Array {
 	/**
 	 * A[1..n]中，若i<j且A[i]>A[j]，则对偶(i,j)称为A的一个逆序对. 此算法是归并排序的增强版本
 	 * 
+	 * 时间复杂度: Θ(NlgN)
 	 * @return 总逆序对数量
 	 */
 	public static int calcInversion(int[] A) {

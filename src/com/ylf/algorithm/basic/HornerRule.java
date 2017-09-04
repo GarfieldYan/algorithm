@@ -1,7 +1,8 @@
 package com.ylf.algorithm.basic;
 
 /**
- * 实现霍纳规则的多项式计算,时间复杂度为O(N)
+ * 实现霍纳规则的多项式计算
+ * 时间复杂度: Θ(N)
  */
 public class HornerRule {
 

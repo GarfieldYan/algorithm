@@ -3,7 +3,8 @@ package com.ylf.algorithm.sort;
 public class Sort {
 
 	/**
-	 * 冒泡排序, 时间复杂度O(N^2)
+	 * 冒泡排序
+	 * 时间复杂度: Θ(N^2)
 	 */
 	public static void bubbleSort(int[] A) {
 		for (int i = 0; i < A.length; i++) {
@@ -18,7 +19,8 @@ public class Sort {
 	}
 
 	/**
-	 * 插入排序, 类似人工排序一副扑克牌, 时间复杂度O(N^2)
+	 * 插入排序, 类似人工排序一副扑克牌
+	 * 时间复杂度: 最坏情况O(N^2)，最好情况Ω(N)
 	 */
 	public static void insertionSort(int[] A) {
 		for (int i = 1; i < A.length; i++) {
@@ -33,7 +35,8 @@ public class Sort {
 	}
 
 	/**
-	 * 归并排序，分治法的一种, 时间复杂度O(NlogN)
+	 * 归并排序，分治法的一种
+	 * 时间复杂度: Θ(NlgN)
 	 */
 	public static void mergeSort(int[] A) {
 		mergeSort(A, 0, A.length - 1);
