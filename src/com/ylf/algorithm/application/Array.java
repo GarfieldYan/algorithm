@@ -1,8 +1,141 @@
 package com.ylf.algorithm.application;
 
+import java.util.Arrays;
+
 import com.ylf.algorithm.sort.Sort;
 
 public class Array {
+	
+	/**
+	 * 寻找最大子数组，采用动态规划
+	 * C[i]表示以A[i]结尾的子数组中的最大子数组和. 所以C[i] = Max{ C[i-1]+A[i], A[i] }
+	 * 
+	 * 时间复杂度: Θ(N)
+	 * @return 返回最大子数组信息，元素1是左边界，元素2是右边界，元素3是该最大子数组所有元素的和
+	 */
+	public static int[] findMaximumSubarrayByDP(int[] A) {
+		int[] C = new int[A.length];
+		C[0] = A[0];
+		int start = 0, end = 0;
+		int ciStart = 0; //C[i]的起点
+		int maximumSum = Integer.MIN_VALUE;
+		for (int i = 1; i < A.length; i++) {
+			if (C[i-1] < 0) {
+				//因为C[i] = Max{ C[i-1]+A[i], A[i] }
+				C[i] = A[i];
+				ciStart = i;
+			} else {
+				C[i] = C[i-1] + A[i];
+			}
+			if (C[i] > maximumSum) {
+				start = ciStart;
+				end = i;
+				maximumSum = C[i];
+			}
+		}
+		return new int[] { start, end, maximumSum };
+	}
+	
+	/**
+	 * 寻找最大子数组，动态规划版本的变种
+	 * 
+	 * 时间复杂度: Θ(N)
+	 * @return 返回最大子数组信息，元素1是左边界，元素2是右边界，元素3是该最大子数组所有元素的和
+	 */
+	public static int[] findMaximumSubarray(int[] A) {
+		int start = 0, end = 0;				//保存全局最大子数组的起点和终点
+		int maximumSum = Integer.MIN_VALUE;	//保存全局最大子数组的和
+		int currentStart = 0, currentEnd = 0;	//保存当前子数组的起点和终点
+		int currentSum = 0;						//保存当前子数组的和
+		
+		//遍历整个数组，查找和为非负数的所有子数组
+		for (int i = 0; i < A.length; i++) {
+			//若不包含A[i]的当前子数组和为负数，则将当前子数组重置为A[i]
+			if (currentSum < 0) {
+				currentStart = i;
+				currentEnd = i;
+				currentSum = A[i];
+			//若不包含A[i]的当前子数组和为非负数，则将A[i]纳入当前子数组
+			} else {
+				currentEnd = i;		//更新当前子数组的终点
+				currentSum += A[i];	//更新当前子数组的和
+			}
+			
+			//将当前子数组和与全局最大子数组和进行对比，若大于则更新全局最大子数组
+			if (currentSum > maximumSum) {
+				start = currentStart;
+				end = currentEnd;
+				maximumSum = currentSum;
+			}
+		}
+		
+		return new int[] {start, end, maximumSum};
+	}
+	
+	/**
+	 * 寻找最大子数组，采用分治法
+	 * 
+	 * 时间复杂度: Θ(NlgN)
+	 * @return 返回最大子数组信息，元素1是左边界，元素2是右边界，元素3是该最大子数组所有元素的和
+	 */
+	public static int[] findMaximumSubarrayByDivideAndConquer(int[] A) {
+		return findMaximumSubarray(A, 0, A.length - 1);
+	}
+	
+	/**
+	 * 寻找指定范围内的最大子数组, p<=r
+	 *
+	 * 时间复杂度: Θ(NlgN)
+	 * @return 返回最大子数组信息，元素1是左边界，元素2是右边界，元素3是该最大子数组所有元素的和
+	 */
+	private static int[] findMaximumSubarray(int[] A, int p, int r) {
+		if (p == r) {
+			return new int[] {p, r, A[p]};
+		} else {
+			int mid = (p + r) / 2;
+			int[] leftMaximumSubarray = findMaximumSubarray(A, p, mid);
+			int[] rightMaximumSubarray = findMaximumSubarray(A, mid+1, r);
+			int[] crossMaximumSubarray = findMaxCrossingSubarray(A, p, mid, r);
+			if (leftMaximumSubarray[2] >= rightMaximumSubarray[2] && leftMaximumSubarray[2] >= crossMaximumSubarray[2]) {
+				return leftMaximumSubarray;
+			} else if (rightMaximumSubarray[2] >= leftMaximumSubarray[2] && rightMaximumSubarray[2] >= crossMaximumSubarray[2]) {
+				return rightMaximumSubarray;
+			} else {
+				return crossMaximumSubarray;
+			}
+		}
+	}
+	
+	/**
+	 * 寻找指定范围内跨越中点的最大子数组, p<=mid<r
+	 * 目标最大子数组由两部分组成，左部分为[left..mid], 右部分为[mid+1..right]
+	 * 
+	 * 时间复杂度: Θ(N)
+	 * @return 返回最大子数组信息，元素1是左边界，元素2是右边界，元素3是该最大子数组所有元素的和
+	 */
+	private static int[] findMaxCrossingSubarray(int[] A, int p, int mid, int r) {
+		int left = mid;
+		int maxLeftSum = 0;	
+		for (int i = mid, sum = 0; i >= p; i--) {
+			sum += A[i];
+			if (sum > maxLeftSum) {
+				maxLeftSum = sum;
+				left = i;
+			}
+		}
+		
+		int right = mid + 1;
+		int maxRightSum = 0;
+		for (int i = mid + 1, sum = 0; i <= r; i++) {
+			sum += A[i];
+			if (sum > maxRightSum) {
+				maxRightSum = sum;
+				right = i;
+			}
+		}
+		
+		return new int[] {left, right, maxLeftSum + maxRightSum};
+	}
 
 	/**
 	 * 寻找和为定值的两个数
@@ -102,10 +235,21 @@ public class Array {
 		}
 		return count;
 	}
-
-	public static void main(String[] args) {
-		int arr[] = new int[] { 1, 20, 6, 4, 5 };
-		System.out.println("Number of inversions are " + Array.calcInversion(arr));
+	
+	private static void print(int[] A) {
+		for (int i = 0; i < A.length; i++) {
+			if (i != A.length - 1) {
+				System.out.print(A[i] + ",");
+			} else {
+				System.out.println(A[i]);
+			}
+		}
 	}
 
+	public static void main(String[] args) {
+		int arr[] = new int[] { 13, -3, -25, 20, -3, -16, -23, 18, 20, -7, 12, -5, -22, 15, -4, 7 };
+		Array.print(arr);
+		System.out.println(Arrays.toString(Array.findMaximumSubarrayByDP(arr)));
+	}
+	
 }
