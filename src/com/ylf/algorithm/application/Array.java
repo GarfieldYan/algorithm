@@ -2,7 +2,7 @@ package com.ylf.algorithm.application;
 
 import java.util.Arrays;
 
-import com.ylf.algorithm.sort.Sort;
+import com.ylf.algorithm.sort.Sorter;
 
 public class Array {
 	
@@ -13,7 +13,7 @@ public class Array {
 	 * 时间复杂度: Θ(N)
 	 * @return 返回最大子数组信息，元素1是左边界，元素2是右边界，元素3是该最大子数组所有元素的和
 	 */
-	public static int[] findMaximumSubarrayByDP(int[] A) {
+	public static int[] findMaximumSubarray_DP(int[] A) {
 		int[] C = new int[A.length];
 		C[0] = A[0];
 		int start = 0, end = 0;
@@ -73,12 +73,12 @@ public class Array {
 	}
 	
 	/**
-	 * 寻找最大子数组，采用分治法
+	 * 寻找最大子数组，采用分治法(Divide And Conqure)
 	 * 
 	 * 时间复杂度: Θ(NlgN)
 	 * @return 返回最大子数组信息，元素1是左边界，元素2是右边界，元素3是该最大子数组所有元素的和
 	 */
-	public static int[] findMaximumSubarrayByDivideAndConquer(int[] A) {
+	public static int[] findMaximumSubarray_DAC(int[] A) {
 		return findMaximumSubarray(A, 0, A.length - 1);
 	}
 	
@@ -145,7 +145,7 @@ public class Array {
 	 */
 	public static boolean findTwoNumForFixedSum(int[] A, int fixedSum) {
 		// 先执行归并排序，时间复杂度Θ(NlogN)
-		Sort.mergeSort(A);
+		Sorter.mergeSort(A);
 		// 以下代码时间复杂度O(N), 用两个指针i，j，各自指向数组的首尾两端，令i=0，j=n-1，然后i++，j--，逐次判断a[i]+a[j]?=sum 
 		boolean result = false;
 		int i = 0;
@@ -249,7 +249,7 @@ public class Array {
 	public static void main(String[] args) {
 		int arr[] = new int[] { 13, -3, -25, 20, -3, -16, -23, 18, 20, -7, 12, -5, -22, 15, -4, 7 };
 		Array.print(arr);
-		System.out.println(Arrays.toString(Array.findMaximumSubarrayByDP(arr)));
+		System.out.println(Arrays.toString(Array.findMaximumSubarray_DP(arr)));
 	}
 	
 }

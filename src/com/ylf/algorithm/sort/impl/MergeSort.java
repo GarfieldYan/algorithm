@@ -1,39 +1,7 @@
-package com.ylf.algorithm.sort;
+package com.ylf.algorithm.sort.impl;
 
-public class Sort {
-
-	/**
-	 * 冒泡排序
-	 * 时间复杂度: Θ(N^2)
-	 */
-	public static void bubbleSort(int[] A) {
-		for (int i = 0; i < A.length; i++) {
-			for (int j = A.length - 1; j > i; j--) {
-				if (A[j - 1] > A[j]) {
-					int tmp = A[j - 1];
-					A[j - 1] = A[j];
-					A[j] = tmp;
-				}
-			}
-		}
-	}
-
-	/**
-	 * 插入排序, 类似人工排序一副扑克牌
-	 * 时间复杂度: 最坏情况O(N^2)，最好情况Ω(N)
-	 */
-	public static void insertionSort(int[] A) {
-		for (int i = 1; i < A.length; i++) {
-			int pendingInsertItem = A[i];
-			int j = i - 1;
-			while (j >= 0 && A[j] > pendingInsertItem) {
-				A[j + 1] = A[j];
-				j--;
-			}
-			A[j + 1] = pendingInsertItem;
-		}
-	}
-
+public class MergeSort {
+	
 	/**
 	 * 归并排序，分治法的一种
 	 * 时间复杂度: Θ(NlgN)
@@ -92,14 +60,6 @@ public class Sort {
 		// 将排好序的数组复制回原数组
 		for (int i = 0; i < rangedA.length; i++) {
 			A[p + i] = rangedA[i];
-		}
-	}
-
-	public static void main(String[] args) {
-		int[] items = new int[] { 5, 2, 1, 7, 3, 4, 8, 6 };
-		Sort.bubbleSort(items);
-		for (int i = 0; i < items.length; i++) {
-			System.out.print(items[i] + ((i == (items.length - 1)) ? "" : ", "));
 		}
 	}
 
