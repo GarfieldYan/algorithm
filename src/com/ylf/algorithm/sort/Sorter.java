@@ -6,23 +6,14 @@ import com.ylf.algorithm.sort.impl.MergeSort;
 
 public class Sorter {
 
-	/**
-	 * 时间复杂度: Θ(N^2)
-	 */
 	public static void bubbleSort(int[] A) {
 		BubbleSort.bubbleSort(A);
 	}
 
-	/**
-	 * 时间复杂度: 最坏情况O(N^2)，最好情况Ω(N)
-	 */
 	public static void insertionSort(int[] A) {
 		InsertionSort.insertionSort(A);
 	}
 
-	/**
-	 * 时间复杂度: Θ(NlgN)
-	 */
 	public static void mergeSort(int[] A) {
 		MergeSort.mergeSort(A);
 	}

@@ -1,16 +1,16 @@
 package com.ylf.algorithm.sort.impl;
 
-public class MergeSort {
+/**
+ * 归并排序，分治法的一种
+ * 时间复杂度: 最坏情况Θ(nlgn)，平均情况Θ(nlgn)
+ */
+public class MergeSort implements ComparisonSort {
 	
-	/**
-	 * 归并排序，分治法的一种
-	 * 时间复杂度: Θ(NlgN)
-	 */
 	public static void mergeSort(int[] A) {
 		mergeSort(A, 0, A.length - 1);
 	}
 
-	public static void mergeSort(int[] A, int p, int r) {
+	private static void mergeSort(int[] A, int p, int r) {
 		if (p < r) {
 			int q = (p + r) / 2;
 			mergeSort(A, p, q);
