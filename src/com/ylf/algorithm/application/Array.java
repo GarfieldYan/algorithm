@@ -2,7 +2,7 @@ package com.ylf.algorithm.application;
 
 import java.util.Arrays;
 
-import com.ylf.algorithm.sort.Sorter;
+import com.ylf.algorithm.sort.impl.MergeSort;
 
 public class Array {
 	
@@ -145,7 +145,7 @@ public class Array {
 	 */
 	public static boolean findTwoNumForFixedSum(int[] A, int fixedSum) {
 		// 先执行归并排序，时间复杂度Θ(NlogN)
-		Sorter.mergeSort(A);
+		MergeSort.mergeSort(A);
 		// 以下代码时间复杂度O(N), 用两个指针i，j，各自指向数组的首尾两端，令i=0，j=n-1，然后i++，j--，逐次判断a[i]+a[j]?=sum 
 		boolean result = false;
 		int i = 0;

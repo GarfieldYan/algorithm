@@ -1,4 +1,4 @@
-package com.ylf.algorithm.sort.impl;
+package com.ylf.algorithm.sort;
 
 /**
  * 比较排序：通过对元素进行比较操作来确定输入数组的有序次序

@@ -1,4 +1,4 @@
-package com.ylf.algorithm.sort.impl;
+package com.ylf.algorithm.sort;
 
 /**
  * 线性时间排序

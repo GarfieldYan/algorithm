@@ -1,5 +1,7 @@
 package com.ylf.algorithm.sort.impl;
 
+import com.ylf.algorithm.sort.ComparisonSort;
+
 /**
  * 归并排序，分治法的一种
  * 时间复杂度: 最坏情况Θ(nlgn)，平均情况Θ(nlgn)
